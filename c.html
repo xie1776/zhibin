@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Kindle显示日期和时间</title>
+    <style>
+     *{
+        margin:0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        color: #000000;
+        background-color: #ffffff;
+    }
+
+    .page {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+
+    .time_container{
+        width: 100%;
+        height: 22%;
+        margin: auto;
+        margin-top: 5%;
+        text-align: center;
+    }
+
+    .date_container {
+        width: 100%;
+        margin: 10% auto;
+        text-align: center;
+    }
+
+    .time {
+        padding-top: 50px;
+        font-size: 14rem;
+    }
+
+    .date {
+        padding-top: 0px;
+        font-size: 6rem;
+    }
+
+    .datecal {
+        padding-top: 0px;
+        font-size: 5rem;
+    }
+    /*横盘*/
+    .wss_r90 {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    /*html[theme='dark-mode'] img{filter: invert(1) hue-rotate(180deg);}*/
+    /*html {transition: color 300ms, background-color 300ms;}*/
+
+    /*这里设置日间模式*/
+    .light{
+        background-color: #f3f3f3;
+        color:#333;
+    }
+    /*这里设置夜间模式*/
+    .dark{
+        background-color: #333;
+        color: #f3f3f3;
+    }
+    #dark{
+        float: right;
+        margin-top: 10px;
+        margin-right: 10px;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+  <div class="page container light" id="page">
+    <div id="dark">关灯</div>
+    <div class="time_container">
+        <div class="time" id="time">22:26</div>
+    </div>
+    <div class="date_container">
+        <div class="date" id="date">9月5日</div>
+        <div class="date" id="week">周一</div>
+        <!-- <div class="datecal" id="date">8月5日 周一</div> -->
+    </div>
+  </div>
+</body>
+</html>
+
+<script>
+function showDate() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var week = ["日", "一", "二", "三", "四", "五", "六"][date.getDay()];
+    var dateString = month + "月" + day + "日"; //year + "年" + 
+    var weekString = " 星期" + week;
+    document.getElementById("date").innerHTML = dateString;
+    document.getElementById("week").innerHTML = weekString;
+}
+
+function showTime() {
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    var timeString = hour + ":" + (minute < 10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second);
+    document.getElementById("time").innerHTML = timeString;
+}
+
+showDate();
+showTime();
+setInterval(showTime, 1000);
+
+var container=document.getElementById('page');
+var mydark=document.getElementById('dark');
+mydark.onclick=function () {
+    if(container.className.indexOf('light')!=-1){
+        mydark.innerHTML = '开灯';
+        container.className='page container dark';
+    }else{
+        mydark.innerHTML = '关灯';
+        container.className='page container light';
+    }
+}
+
+</script>

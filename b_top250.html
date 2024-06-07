@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="/zhibin/static/layui/css/layui.css" rel="stylesheet">
+	<script src="/zhibin/static/layui/layui.js"></script>
+	<script src="/zhibin/static/js/jquery-2.2.1.min.js"></script>
+	<title>豆瓣BooksTop250</title>
+	<style>
+
+	</style>
+</head>
+<body>
+	<div class="layui-container" style="margin-top: 18px;">
+		<div class="layui-row">
+			<form class="layui-form layui-col-md12 x-so" action="">
+	          	<div class="layui-input-inline">
+	            	<select name="see_status">
+	              	<option value="">是否已看</option>
+	              	<option value="1">是</option>
+	              	<option value="0">否</option>
+	            	</select>
+	          	</div>
+	          	<div class="layui-input-inline">
+	            	<select name="country">
+	              	<option value="">地区</option>
+	              	<option value="中国">中国</option>
+	              	<option value="美国">美国</option>
+	              	<option value="日本">日本</option>
+	              	<option value="韩国">韩国</option>
+	              	<option value="其他">其他</option>
+	            	</select>
+	          	</div>
+	          	<div class="layui-input-inline">
+	          		<input type="text" name="title"  placeholder="书名" autocomplete="off" class="layui-input" style="width: 212px;">
+	          	</div>
+	          	<div class="layui-input-inline">
+	          		<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i>查询</button>
+	          	</div>
+	        </form>
+	    </div>
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend>豆瓣BooksTop250：<sup id="counter">250</sup></legend>
+		</fieldset>
+		<div class="layui-row">
+			<div class="layui-col-md12" style="margin-left: 2px;text-align: center;" id="content_a_div" >
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+
+var china_list = ['中国大陆', '中国香港', '中国台湾'];
+var select_list = ['中国大陆', '中国香港', '中国台湾', '美国', '日本', '韩国'];
+layui.use(['element', 'carousel','jquery','form'], function() {
+    var element = layui.element;
+    var carousel = layui.carousel;
+    var $ = layui.jquery;
+    var form = layui.form;
+
+    //加载课程列表
+	function loadCourseList(country, see_status, title)
+	{
+		$("#content_a_div").empty();
+	   	var html_a = "";
+	   	$.ajax({
+	       url:'/zhibin/static/json/b_top250.json',
+	       dataType:'json',
+	       type:'get',
+	       async:false,
+	       success:function (resp) {
+	       		if (resp.code==1) {
+	       			var counter = 0;
+	       			$.each(resp.data, function(index, value){
+	       				var see_status_where = true;
+	       				if (see_status!=='') {
+	       					if (value.see_status==see_status) {
+	       						see_status_where = true;
+	       					} else {
+	       						see_status_where = false;
+	       					}
+	       				}
+
+	       				var country_where = true;
+	       				if (country!==''){
+	       					if (country=='中国' && china_list.includes(value.country)) {
+	       						country_where = true;
+	       					} else if (country=='其他' && !select_list.includes(value.country)){
+	       						country_where = true;
+	       					} else if (value.country==country) {
+	       						country_where = true;
+	       					} else {
+	       						country_where = false;
+	       					}
+	       				}
+
+	       				var title_where = true;
+	       				if (title!=='') {
+	       					if (value.title==title) {
+	       						year_where = true;
+	       					} else {
+	       						year_where = false;
+	       					}
+	       				}
+	       				var is_see_status_str_class = value.see_status==0 ? 'layui-btn-primary' : '';
+
+	       				if (see_status_where && country_where && title_where) {
+	       					var node = '<a href="'+value.link+'" target="_blank" class="layui-btn '+is_see_status_str_class+' layui-btn-xs" style="font-size: 14px;margin-bottom:8px;">'+value.rank+'. '+value.title+' ['+value.score+'·'+value.country+'·'+value.author+']</a>';
+	       					counter++;
+	       				} else {
+	       					var node = '';
+	       				}
+	       				
+					   	html_a += node;
+	       			});
+	       			$("#content_a_div").append(html_a).css({"line-height":"2em"});
+	       			$("#counter").html(counter);
+	       			/*layui.use('element', function() {
+		                var element = layui.element;
+		                element.init();
+	            });*/
+				}
+	       }
+	   });
+	}
+	loadCourseList('', '', '');
+
+    //提交事件
+	form.on('submit(sreach)', function(data){
+		/*alert(JSON.stringify(data.field), {
+			title: '最终的提交信息'
+		});*/
+		loadCourseList(data.field.country, data.field.see_status, data.field.title);
+		return false;
+	});
+});
+
+</script>
