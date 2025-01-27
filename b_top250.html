@@ -107,7 +107,7 @@ layui.use(['element', 'carousel','jquery','form'], function() {
 	       				var is_see_status_str_class = value.see_status==0 ? 'layui-btn-primary' : '';
 
 	       				if (see_status_where && country_where && title_where) {
-	       					var node = '<a href="'+value.link+'" target="_blank" class="layui-btn '+is_see_status_str_class+' layui-btn-xs" style="font-size: 14px;margin-bottom:8px;">'+value.rank+'. '+value.title+' ['+value.score+'·'+value.country+'·'+value.author+']</a>';
+	       					var node = '<a id="a-'+value.rank+'" data-id="'+value.rank+'" data-desc="'+value.desc+'" href="'+value.link+'" target="_blank" class="layui-btn '+is_see_status_str_class+' layui-btn-xs top_list" style="font-size: 14px;margin-bottom:8px;">'+value.rank+'. '+value.title+' ['+value.score+'·'+value.country+'·'+value.author+']</a>';
 	       					counter++;
 	       				} else {
 	       					var node = '';
@@ -120,7 +120,18 @@ layui.use(['element', 'carousel','jquery','form'], function() {
 	       			/*layui.use('element', function() {
 		                var element = layui.element;
 		                element.init();
-	            });*/
+	            	});*/
+	            	// 绑定鼠标移入事件
+			        $(".top_list").on('mouseenter', function () {
+			            var desc = $(this).data('desc'); // 获取 data-desc 的值
+			            var id = $(this).attr('id'); // 获取当前元素的 id
+			            layer.tips(desc, '#' + id, {
+			              tips: [1, '#393D49'],
+			              time: 4000
+			            });
+			        }).on('mouseleave', function () {
+			            layer.closeAll('tips'); // 关闭所有提示框
+			        });
 				}
 	       }
 	   });
