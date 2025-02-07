@@ -8,11 +8,27 @@
 	<script src="/zhibin/static/js/jquery-2.2.1.min.js"></script>
 	<title>豆瓣电影Top250</title>
 	<style>
-
+		body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .content {
+    	margin-top: 18px;
+    	margin-bottom: 10px;
+    }
+    .footer {
+	    padding: 10px 15px;
+	    line-height: 28px;
+	    text-align: center;
+	    color: #666;
+	    font-weight: 300;
+	    border-top: 1px solid #F1F1F1;
+		}
 	</style>
 </head>
 <body>
-	<div class="layui-container" style="margin-top: 18px;">
+	<div class="layui-container content">
 		<div class="layui-row">
 			<form class="layui-form layui-col-md12 x-so" action="">
 				<div class="layui-input-inline">
@@ -73,6 +89,20 @@
 			<div class="layui-col-md12" style="margin-left: 2px;text-align: center;" id="content_a_div" >
 			</div>
 		</div>
+	</div>
+	
+	<!-- 底部 -->
+	<div class="layui-footer footer footer-docs">
+	  <p>Copyright © 2025 <a href="http://www.hkan.cn">好看CN</a> MIT Licensed</p>
+	  <p id="LAY-footer-info">
+	    <a href="https://xie1776.github.io/zhibin/m_top250.html" target="_blank">电影TOP<sup>250</sup></a> 
+	    <a href="https://xie1776.github.io/zhibin/b_top250.html" target="_blank">读书TOP<sup>250</sup></a>
+	  	本站托管于<a href="https://github.com/" target="_blank">GitHub Pages</a></p>
+	  <p>
+	  <span>
+	      感谢 <a href="https://layui.dev/2.7/" target="_blank" class="layui-font-blue"><strong>Layui</strong></a> 提供支持
+	  </span>
+	  </p>
 	</div>
 </body>
 </html>
