@@ -24,7 +24,15 @@
 	    color: #666;
 	    font-weight: 300;
 	    border-top: 1px solid #F1F1F1;
-		}
+	}
+	.top_list {
+		font-size: 14px;
+		margin-bottom:8px;
+		white-space: nowrap; /* 禁止文本换行 */
+	    overflow: hidden; /* 超出部分隐藏 */
+	    text-overflow: ellipsis; /* 超出部分显示省略号 */
+	    max-width: 330px;
+	}
 	</style>
 </head>
 <body>
@@ -137,7 +145,7 @@ layui.use(['element', 'carousel','jquery','form'], function() {
 	       				var is_see_status_str_class = value.see_status==0 ? 'layui-btn-primary' : '';
 
 	       				if (see_status_where && country_where && title_where) {
-	       					var node = '<a id="a-'+value.rank+'" data-id="'+value.rank+'" data-desc="'+value.desc+'" href="'+value.link+'" target="_blank" class="layui-btn '+is_see_status_str_class+' layui-btn-xs top_list" style="font-size: 14px;margin-bottom:8px;">'+value.rank+'. '+value.title+' ['+value.score+'·'+value.country+'·'+value.author+']</a>';
+	       					var node = '<a id="a-'+value.rank+'" data-id="'+value.rank+'" data-desc="'+value.desc+'" href="'+value.link+'" target="_blank" class="layui-btn '+is_see_status_str_class+' layui-btn-xs top_list">'+value.rank+'. '+value.title+' ['+value.score+'·'+value.country+'·'+value.author+']</a>';
 	       					counter++;
 	       				} else {
 	       					var node = '';

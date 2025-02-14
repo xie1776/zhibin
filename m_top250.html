@@ -8,7 +8,7 @@
 	<script src="/zhibin/static/js/jquery-2.2.1.min.js"></script>
 	<title>豆瓣电影Top250</title>
 	<style>
-		body {
+	body {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -25,6 +25,14 @@
 	    font-weight: 300;
 	    border-top: 1px solid #F1F1F1;
 		}
+	.top_list {
+		font-size: 14px;
+		margin-bottom:8px;
+		white-space: nowrap; /* 禁止文本换行 */
+	    overflow: hidden; /* 超出部分隐藏 */
+	    text-overflow: ellipsis; /* 超出部分显示省略号 */
+	    max-width: 330px;
+	}
 	</style>
 </head>
 <body>
@@ -205,7 +213,7 @@ layui.use(['element', 'carousel','jquery','form'], function() {
 	       				}
 
 	       				if (see_status_where && year_where && country_where && title_where && votes_where && score_where) {
-	       					var node = '<a id="a-'+value.id+'" data-id="'+value.id+'" data-desc="'+value.desc+'" href="'+value.link+'" target="_blank" class="layui-btn '+is_see_status_str_class+' layui-btn-xs top_list" style="font-size: 14px;margin-bottom:8px;">'+value.rank+'. '+value.title+' ['+value.score+'·'+value.country+'·'+value.year+']</a>';
+	       					var node = '<a id="a-'+value.id+'" data-id="'+value.id+'" data-desc="'+value.desc+'" href="'+value.link+'" target="_blank" class="layui-btn '+is_see_status_str_class+' layui-btn-xs top_list" >'+value.rank+'. '+value.title+' ['+value.score+'·'+value.country+'·'+value.year+']</a>';
 	       					counter++;
 	       				} else {
 	       					var node = '';
